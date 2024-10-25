@@ -5,9 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lifestyle Vibes</title>
-  <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <style>
     body.dark-mode {
@@ -71,11 +69,39 @@
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-          <li class="nav-item"><a class="nav-link btn btn-outline-primary" href="#">Subscribe</a></li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-outline-primary" href="#" data-bs-toggle="modal" data-bs-target="#subscribeModal">Subscribe</a>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
+
+  <!-- Subscribe Modal -->
+  <div class="modal fade" id="subscribeModal" tabindex="-1" aria-labelledby="subscribeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="subscribeModalLabel">Stay in the Loop</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="subscribeForm">
+            <div class="mb-3">
+                <label for="firstNameModal" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstNameModal" placeholder="Enter your first name" required>
+              </div>
+            <div class="mb-3">
+              <label for="emailInput" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="emailInput" placeholder="Enter your Email" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+          <div id="subscribeFormModal" class="mt-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Carousel -->
   <div id="lifestyleCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -152,6 +178,7 @@
   <!-- Bootstrap 5 JS and dependencies -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    // Toggle Dark/Light Mode
     function toggleDarkMode() {
       document.body.classList.toggle("dark-mode");
       const icon = document.querySelector('.btn-toggle i');
@@ -163,6 +190,28 @@
         icon.classList.add('fa-moon');
       }
     }
+    const alertPlaceholder = document.getElementById('subscribeFormModal');
+    
+    // Function to append an alert
+    const appendAlert = (message, type) => {
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = [
+        `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+        `   <div>${message}</div>`,
+        '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+        '</div>'
+      ].join('');
+
+      alertPlaceholder.append(wrapper);
+    };
+
+    // Event listener for the subscribe form submission
+    const subscribeForm = document.getElementById('subscribeForm');
+    subscribeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      appendAlert('Thank you for subscribing!', 'success');
+      subscribeForm.reset();
+    });
   </script>
 </body>
 
